@@ -1,0 +1,22 @@
+ private string GetText()
+        {
+            StringBuilder text = new StringBuilder();
+
+            Microsoft.Office.Interop.Word.Application word = new Microsoft.Office.Interop.Word.Application();
+
+            object miss = System.Reflection.Missing.Value;
+
+            object path = @"C:\Users\*File Path*\FileName";
+            object readOnly = true;
+
+            Microsoft.Office.Interop.Word.Document docs = word.Documents.Open(ref path, ref miss, ref readOnly, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss, ref miss);
+            for (int i = 0; i < docs.Paragraphs.Count; i++)
+            {
+                text.Append(" \r\n " + docs.Paragraphs[i + 1].Range.Text.ToString());
+            }
+            docs.Close(false);
+            Marshal.ReleaseComObject(docs);
+            word.Quit();
+            Marshal.ReleaseComObject(word);
+            return text.ToString();
+        }
